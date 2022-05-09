@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.note.usersign.RegisterActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class StartActivity extends AppCompatActivity {
@@ -48,16 +49,18 @@ public class StartActivity extends AppCompatActivity {
 
     }
     private void Register(){
-
+        Intent startIntent = new Intent(StartActivity.this, RegisterActivity.class);
+        startActivity(startIntent);
+        finish();
     }
 
     private void updateUI(){
         if(fAuth.getCurrentUser() != null){
             Log.i("StartActivity", "fAuth != null");
+            Intent startIntent = new Intent(StartActivity.this, MainActivity.class);
+            startActivity(startIntent);
+            finish();
         }else {
-//            Intent startIntent = new Intent(StartActivity.this, MainActivity.class);
-//            startActivity(startIntent);
-//            finish();
             Log.i("StartActivity", "fAuth == null");
         }
     }
