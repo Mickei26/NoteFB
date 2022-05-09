@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fAuth.signOut();
+                Intent startIntent = new Intent(MainActivity.this, StartActivity.class);
+                startActivity(startIntent);
+                finish();
             }
         });
     }
