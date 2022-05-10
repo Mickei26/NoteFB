@@ -67,20 +67,25 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    Intent startIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(startIntent);
+                    finish();
                     Toast.makeText(RegisterActivity.this, "User created!", Toast.LENGTH_SHORT).show();
-                    fUsersDatabase.child(fAuth.getCurrentUser().getUid()).child("basic").child("name").setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                Intent startIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                                startActivity(startIntent);
-                                finish();
-                                Toast.makeText(RegisterActivity.this, "User created!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    fAuth.signOut();
+//                    hàm lưu name user vào trong Realtime Database
+//                    fUsersDatabase.child(fAuth.getCurrentUser().getUid()).child("basic").child("name").setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if (task.isSuccessful()){
+//                                Intent startIntent = new Intent(RegisterActivity.this, MainActivity.class);
+//                                startActivity(startIntent);
+//                                finish();
+//                                Toast.makeText(RegisterActivity.this, "User created!", Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                Toast.makeText(RegisterActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
                 }else {
                     Toast.makeText(RegisterActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
