@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.note.MainActivity;
 import com.example.note.R;
+import com.example.note.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth fAuth;
 
     private EditText editEmail, editPass;
-    private Button btnLogin;
+    private Button btnLogin, btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         editPass = findViewById(R.id.editPassword);
 
         btnLogin = findViewById(R.id.btnLogin);
+        btnBack = findViewById(R.id.btnBack);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +49,15 @@ public class LoginActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(mail)&&!TextUtils.isEmpty(mail)){
                     Login(mail, pass);
                 }
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(LoginActivity.this, StartActivity.class);
+                startActivity(startIntent);
+                finish();
             }
         });
 
