@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Note">
         <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".usersign.RegisterActivity"
             android:exported="false" />
         <activity
