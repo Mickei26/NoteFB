@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String mail = editEmail.getText().toString().trim();
-                String pass = editEmail.getText().toString().trim();
+                String pass = editPass.getText().toString().trim();
 
                 if (!TextUtils.isEmpty(mail)&&!TextUtils.isEmpty(mail)){
                     Login(mail, pass);
@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(startIntent);
                     finish();
                     Toast.makeText(LoginActivity.this, "Sign In successful!", Toast.LENGTH_SHORT).show();
-                    fAuth.signOut();
                 }else {
                     Toast.makeText(LoginActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
