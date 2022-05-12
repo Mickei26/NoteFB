@@ -76,6 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(startIntent);
                     finish();
                     Toast.makeText(RegisterActivity.this, "User created!", Toast.LENGTH_SHORT).show();
+                    myRef.child(fAuth.getCurrentUser().getUid()).child("basic").child("name").setValue(name);
                     fAuth.signOut();
 //                    hàm lưu name user vào trong Realtime Database
 //                    myRef.child(fAuth.getCurrentUser().getUid()).child("basic").child("name").setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
