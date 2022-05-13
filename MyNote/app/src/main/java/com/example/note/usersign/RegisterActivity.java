@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         fAuth = FirebaseAuth.getInstance();
-        myRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        myRef = FirebaseDatabase.getInstance().getReference( "Users");
 
         btnRegister = findViewById(R.id.btnRegister);
         btnBack = findViewById(R.id.btnBack);
@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                    });
                     User user = new User(name,email,pass);
 //                    myRef.push().setValue(user);
-                    myRef.child(fAuth.getCurrentUser().getUid()).push().setValue(user);
+                    myRef.child(fAuth.getCurrentUser().getUid()).setValue(user);
                     Intent startIntent = new Intent(RegisterActivity.this, StartActivity.class);
                     startActivity(startIntent);
                     Toast.makeText(RegisterActivity.this, "User created!", Toast.LENGTH_SHORT).show();
