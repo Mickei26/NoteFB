@@ -45,7 +45,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(title)&&!TextUtils.isEmpty(description)){
                     SaveNote(title, description);
                 }else {
-//                    Snackbar.make(view, "Fill all", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Fill all", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
