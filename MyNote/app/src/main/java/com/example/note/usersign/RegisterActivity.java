@@ -40,7 +40,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         fAuth = FirebaseAuth.getInstance();
-        myRef = FirebaseDatabase.getInstance().getReference( "Users");
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        myRef = database.getReference( "Users");
+
+
 
         btnRegister = findViewById(R.id.btnRegister);
         btnBack = findViewById(R.id.btnBack);
