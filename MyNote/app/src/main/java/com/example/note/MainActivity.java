@@ -1,13 +1,17 @@
 package com.example.note;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.note.Note.NewNoteActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,5 +49,28 @@ public class MainActivity extends AppCompatActivity {
             finish();
             Log.i("MainActivity", "fAuth == null");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()){
+            case R.id.add_note:
+                Intent startIntent = new Intent(MainActivity.this, NewNoteActivity.class);
+                startActivity(startIntent);
+                break;
+        }
+
+        return true;
     }
 }
