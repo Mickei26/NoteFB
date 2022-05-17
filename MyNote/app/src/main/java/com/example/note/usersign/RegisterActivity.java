@@ -78,42 +78,21 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-//                    myRef.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            myRef.child("user").setValue(name);
-//                            Intent startIntent = new Intent(RegisterActivity.this, MainActivity.class);
-//                            startActivity(startIntent);
-//                            Toast.makeText(RegisterActivity.this, "User created!", Toast.LENGTH_SHORT).show();
-//                            fAuth.signOut();
-//                        }
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//                            Toast.makeText(RegisterActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
                     User user = new User(name,email,pass);
-//                    myRef.push().setValue(user);
-                    myRef.child(fAuth.getCurrentUser().getUid()).setValue(user);
-                    Intent startIntent = new Intent(RegisterActivity.this, StartActivity.class);
-                    startActivity(startIntent);
-                    Toast.makeText(RegisterActivity.this, "User created!", Toast.LENGTH_SHORT).show();
-                    fAuth.signOut();
 //                    hàm lưu name user vào trong Realtime Database
-//                    myRef.child(fAuth.getCurrentUser().getUid()).child("basic").child("name").setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()){
-//                                Intent startIntent = new Intent(RegisterActivity.this, MainActivity.class);
-//                                startActivity(startIntent);
-//                                finish();
-//                                Toast.makeText(RegisterActivity.this, "User created!", Toast.LENGTH_SHORT).show();
-//                                fAuth.signOut();
-//                            } else {
-//                                Toast.makeText(RegisterActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
+                    myRef.child(fAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Intent startIntent = new Intent(RegisterActivity.this, StartActivity.class);
+                                startActivity(startIntent);
+                                Toast.makeText(RegisterActivity.this, "User created!", Toast.LENGTH_SHORT).show();
+                                fAuth.signOut();
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }else {
                     Toast.makeText(RegisterActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
