@@ -1,23 +1,28 @@
 package com.example.note;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.note.Note.NewNoteActivity;
+import com.example.note.Note.Note;
+import com.example.note.Note.NoteViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.ui.database.FirebaseRecyclerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
+    private RecyclerView viewList;
+    private GridLayoutManager gridLayoutManager;
+
     private FirebaseAuth fAuth;
-     private Button btnOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +31,24 @@ public class MainActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
 
+        gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
+
+        viewList = findViewById(R.id.viewList);
+        viewList.setHasFixedSize(true);
+        viewList.setLayoutManager(gridLayoutManager);
+
         updateUI();
 
-        btnOut = findViewById(R.id.btnSignOut);
-
-        btnOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fAuth.signOut();
-                Intent startIntent = new Intent(MainActivity.this, StartActivity.class);
-                startActivity(startIntent);
-                finish();
-            }
-        });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerAdapter<Note, NoteViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Note, NoteViewHolder>;
+
+    }
+
     private void updateUI(){
         if(fAuth.getCurrentUser() != null){
             Log.i("MainActivity", "fAuth != null");
@@ -68,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.add_note:
                 Intent startIntent = new Intent(MainActivity.this, NewNoteActivity.class);
                 startActivity(startIntent);
+                break;
+            case R.id.sign_out:
+                fAuth.signOut();
+                Intent signOutIntent = new Intent(MainActivity.this, StartActivity.class);
+                startActivity(signOutIntent);
+                finish();
                 break;
         }
 
