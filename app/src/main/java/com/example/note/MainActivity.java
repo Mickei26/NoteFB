@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.note.more.ListNoteAdapter;
 import com.example.note.notes.NewNoteActivity;
 import com.example.note.notes.Note;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showNote(){
-        ArrayList<String> list = new ArrayList<>();
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.list_note, list);
+        ArrayList<Note> list = new ArrayList<Note>();
+        ListNoteAdapter adapter = new ListNoteAdapter(this, list);
         lView.setAdapter(adapter);
 
         myRef.child(fAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Note note = dataSnapshot.getValue(Note.class);
                     String test = note.getTitle() + note.getTime() + note.getDescription();
-                    list.add(test);
+                    adapter.add(note);
                 }
                 adapter.notifyDataSetChanged();
             }
