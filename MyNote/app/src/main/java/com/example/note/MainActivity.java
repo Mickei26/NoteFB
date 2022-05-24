@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -15,8 +14,6 @@ import com.example.note.Note.NewNoteActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,18 +27,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = findViewById(R.id.viewList);
+//        listView = findViewById(R.id.viewList);
 
         fAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        myRef = database.getReference("Notes");
+        myRef = database.getReference("Notes").child(fAuth.getCurrentUser().getUid());
 
         updateUI();
 
-        ArrayList<String> list = new ArrayList<>();
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.activity_single_note, list);
-        listView.setAdapter(adapter);
-
+//        ArrayList<String> list = new ArrayList<>();
+//        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.activity_single_note, list);
+//        listView.setAdapter(adapter);
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                list.clear();
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    Note note = snapshot.getValue(Note.class);
+//                    String test = note.getTitle() + note.getTime();
+//                    list.add(test);
+//                }
+//                adapter.notifyDataSetChanged();
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
     }
 
     private void updateUI(){
