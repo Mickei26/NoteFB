@@ -41,7 +41,21 @@ public class MainActivity extends AppCompatActivity {
         lView = findViewById(R.id.listView);
 
         updateUI();
+        showNote();
+    }
 
+    private void updateUI(){
+        if(fAuth.getCurrentUser() != null){
+            Log.i("MainActivity", "fAuth != null");
+        }else {
+            Intent startIntent = new Intent(MainActivity.this, StartActivity.class);
+            startActivity(startIntent);
+            finish();
+            Log.i("MainActivity", "fAuth == null");
+        }
+    }
+
+    private void showNote(){
         ArrayList<String> list = new ArrayList<>();
         ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.list_note, list);
         lView.setAdapter(adapter);
@@ -63,17 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void updateUI(){
-        if(fAuth.getCurrentUser() != null){
-            Log.i("MainActivity", "fAuth != null");
-        }else {
-            Intent startIntent = new Intent(MainActivity.this, StartActivity.class);
-            startActivity(startIntent);
-            finish();
-            Log.i("MainActivity", "fAuth == null");
-        }
     }
 
     @Override
