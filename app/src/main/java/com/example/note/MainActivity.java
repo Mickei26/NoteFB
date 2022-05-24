@@ -2,6 +2,7 @@ package com.example.note;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth fAuth;
     private DatabaseReference myRef;
+    private GridLayoutManager gridLayoutManager;
 
     private ListView lView;
 

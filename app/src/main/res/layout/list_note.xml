@@ -16,3 +16,40 @@ android:layout_height="match_parent"
         android:textSize="15dp"
         android:text="Time" />
 </LinearLayout>
+<!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:orientation="vertical"-->
+<!--    android:layout_width="120dp"-->
+<!--    android:layout_height="120dp"-->
+<!--    android:minHeight="120dp"-->
+<!--    android:maxHeight="150dp"-->
+<!--    app:contentPadding="5dp"-->
+<!--    android:layout_margin="10dp">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtTitle"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:text="Note title"-->
+<!--            android:maxLines="5"-->
+<!--            android:ellipsize="end"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginBottom="10dp"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtTime"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Update time"-->
+<!--            android:maxLines="1"-->
+<!--            android:ellipsize="end"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="12sp"/>-->
+<!--    </LinearLayout>-->
+<!--</androidx.cardview.widget.CardView>-->
