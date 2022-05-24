@@ -12,10 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.note.Note.NewNoteActivity;
-import com.example.note.Note.Note;
-import com.example.note.Note.NoteViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.ui.database.FirebaseRecyclerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,22 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
 
-        gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
-
-        viewList = findViewById(R.id.viewList);
-        viewList.setHasFixedSize(true);
-        viewList.setLayoutManager(gridLayoutManager);
-
         updateUI();
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseRecyclerAdapter<Note, NoteViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Note, NoteViewHolder>;
-
     }
 
     private void updateUI(){
