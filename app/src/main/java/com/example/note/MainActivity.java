@@ -41,12 +41,13 @@ public class MainActivity extends AppCompatActivity {
         lView = findViewById(R.id.listView);
 
         updateUI();
-        showNote();
+
     }
 
     private void updateUI(){
         if(fAuth.getCurrentUser() != null){
             Log.i("MainActivity", "fAuth != null");
+            showNote();
         }else {
             Intent startIntent = new Intent(MainActivity.this, StartActivity.class);
             startActivity(startIntent);
