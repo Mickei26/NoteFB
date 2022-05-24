@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Note note = snapshot.getValue(Note.class);
+                    Note note = dataSnapshot.getValue(Note.class);
                     String test = note.getTitle() + note.getTime() + note.getDescription();
                     list.add(test);
                 }
