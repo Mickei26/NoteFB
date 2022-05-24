@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        myRef = database.getReference();
+        myRef = database.getReference("Notes");
 
         updateUI();
 
