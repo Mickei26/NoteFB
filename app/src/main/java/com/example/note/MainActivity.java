@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
                             String test = list.get(position).getTitle();
                             Toast.makeText(getApplicationContext(), test, Toast.LENGTH_LONG).show();
-                            EditText editText = (EditText)findViewById(R.id.editTitle);
-                            editText.setText(test, TextView.BufferType.EDITABLE);
+                            EditText editTitle = (EditText)findViewById(R.id.editTitle);
+                            editTitle.setText(test);
 
                             Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
 //                            intent.putExtra("location", editText.getText(test));
