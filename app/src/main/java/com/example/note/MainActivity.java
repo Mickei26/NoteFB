@@ -9,12 +9,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.note.more.ListNoteAdapter;
 import com.example.note.notes.NewNoteActivity;
 import com.example.note.notes.Note;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -60,9 +67,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showNote(){
-        ArrayList<Note> list = new ArrayList<Note>();
+        ArrayList<Note> list = new ArrayList<>();
         ListNoteAdapter adapter = new ListNoteAdapter(this, list);
-        lView.setAdapter(adapter);
 
         myRef.child(fAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,15 +76,32 @@ public class MainActivity extends AppCompatActivity {
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Note note = dataSnapshot.getValue(Note.class);
-                    String test = note.getTitle() + note.getTime() + note.getDescription();
                     adapter.add(note);
+                    lView.setAdapter(adapter);
+
+
+                    lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            String test = list.get(position).getTitle();
+                            Toast.makeText(getApplicationContext(), test, Toast.LENGTH_LONG).show();
+                            EditText editText = (EditText)findViewById(R.id.editTitle);
+                            editText.setText(test, TextView.BufferType.EDITABLE);
+
+                            Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
+//                            intent.putExtra("location", editText.getText(test));
+//                            intent.putExtra("p",position);
+                            startActivity(intent);
+                        }
+                    });
                 }
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.w("Failed to read value.", error.toException());
             }
         });
     }
