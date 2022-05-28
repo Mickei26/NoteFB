@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
-
         switch (item.getItemId()){
             case R.id.add_note:
                 Intent startIntent = new Intent(MainActivity.this, NewNoteActivity.class);
@@ -130,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 break;
         }
-
         return true;
     }
 }

@@ -12,10 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.note.MainActivity;
 import com.example.note.R;
 import com.example.note.StartActivity;
+import com.example.note.users.RegisterActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -68,7 +70,7 @@ public class ShowNoteActivity extends AppCompatActivity {
         myRef.child(fAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                
+
             }
 
             @Override
@@ -81,7 +83,6 @@ public class ShowNoteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
         getMenuInflater().inflate(R.menu.note, menu);
         return true;
     }
@@ -89,12 +90,12 @@ public class ShowNoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
-
         switch (item.getItemId()){
             case R.id.edit_note:
                 editNote();
                 Intent startIntent = new Intent(ShowNoteActivity.this, NewNoteActivity.class);
                 startActivity(startIntent);
+                Toast.makeText(ShowNoteActivity.this, "Note updated!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.delete_note:
                 fAuth.signOut();
@@ -103,7 +104,6 @@ public class ShowNoteActivity extends AppCompatActivity {
                 finish();
                 break;
         }
-
         return true;
     }
 }
