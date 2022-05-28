@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth fAuth;
     private DatabaseReference myRef;
-    private GridLayoutManager gridLayoutManager;
 
     private ListView lView;
 
@@ -87,16 +86,13 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, ShowNoteActivity.class);
                             String title = list.get(position).getTitle();
                             String description = list.get(position).getDescription();
+                            String time = list.get(position).getTime();
                             intent.putExtra("Title", title);
                             intent.putExtra("Description", description);
-//                            intent.putExtra("Title", title);
+                            intent.putExtra("Time", time);
                             startActivity(intent);
                             finish();
 //                            Toast.makeText(getApplicationContext(), test, Toast.LENGTH_LONG).show();
-//                            EditText editTitle = (EditText)findViewById(R.id.showTitle);
-//                            editTitle.setText(test);
-//                            intent.putExtra("location", editText.getText(test));
-//                            intent.putExtra("p",position);
                         }
                     });
                 }
@@ -115,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
 
         getMenuInflater().inflate(R.menu.main, menu);
-
         return true;
     }
 

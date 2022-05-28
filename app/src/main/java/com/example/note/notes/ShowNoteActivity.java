@@ -1,28 +1,89 @@
 package com.example.note.notes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.note.MainActivity;
 import com.example.note.R;
+import com.example.note.StartActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ShowNoteActivity extends AppCompatActivity {
 
-    EditText editTitle, editDescription;
+    private FirebaseAuth fAuth;
+    private DatabaseReference myRef;
+
+    private EditText showTitle, showDescription, showTime;
+    private Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_note);
 
-        editTitle = findViewById(R.id.showTitle);
-        String title = getIntent().getExtras().getString("Title");
-        editTitle.setText(title);
+        fAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
-        editDescription = findViewById(R.id.showDescription);
+        showTitle = findViewById(R.id.showTitle);
+        String title = getIntent().getExtras().getString("Title");
+        showTitle.setText(title);
+
+        showDescription = findViewById(R.id.showDescription);
         String description = getIntent().getExtras().getString("Description");
-        editDescription.setText(description);
+        showDescription.setText(description);
+
+        showTime = findViewById(R.id.showTime);
+        String time = getIntent().getExtras().getString("Time");
+        showTime.setText(time);
+
+        back =findViewById(R.id.btnBackMain);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
+                startActivity(startIntent);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.note, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()){
+            case R.id.edit_note:
+                Intent startIntent = new Intent(ShowNoteActivity.this, NewNoteActivity.class);
+                startActivity(startIntent);
+                break;
+            case R.id.delete_note:
+                fAuth.signOut();
+                Intent signOutIntent = new Intent(ShowNoteActivity.this, StartActivity.class);
+                startActivity(signOutIntent);
+                finish();
+                break;
+        }
+
+        return true;
     }
 }
