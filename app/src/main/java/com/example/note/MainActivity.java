@@ -84,16 +84,19 @@ public class MainActivity extends AppCompatActivity {
                     lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            String test = list.get(position).getTitle();
-                            Toast.makeText(getApplicationContext(), test, Toast.LENGTH_LONG).show();
-                            EditText editTitle = (EditText)findViewById(R.id.showTitle);
-                            editTitle.setText(test);
-
                             Intent intent = new Intent(MainActivity.this, ShowNoteActivity.class);
+                            String title = list.get(position).getTitle();
+                            String description = list.get(position).getDescription();
+                            intent.putExtra("Title", title);
+                            intent.putExtra("Description", description);
+//                            intent.putExtra("Title", title);
+                            startActivity(intent);
+                            finish();
+//                            Toast.makeText(getApplicationContext(), test, Toast.LENGTH_LONG).show();
+//                            EditText editTitle = (EditText)findViewById(R.id.showTitle);
+//                            editTitle.setText(test);
 //                            intent.putExtra("location", editText.getText(test));
 //                            intent.putExtra("p",position);
-                            startActivity(intent);
                         }
                     });
                 }
