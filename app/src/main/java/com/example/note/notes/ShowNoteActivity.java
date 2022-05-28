@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.note.MainActivity;
 import com.example.note.R;
 import com.example.note.StartActivity;
+import com.example.note.users.LoginActivity;
 import com.example.note.users.RegisterActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,9 +39,8 @@ public class ShowNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_note);
 
-        fAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        myRef = database.getReference( "Notes");
+
+
 
         showTitle = findViewById(R.id.showTitle);
         String title = getIntent().getExtras().getString("Title");
@@ -67,17 +67,48 @@ public class ShowNoteActivity extends AppCompatActivity {
     }
 
     public void editNote(){
-        myRef.child(fAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            }
+        if(titleChanged() || descriptionChanged()){
+            Toast.makeText(ShowNoteActivity.this, "Note updated!", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(ShowNoteActivity.this, "ERROR!", Toast.LENGTH_SHORT).show();
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("Failed to edit value.", error.toException());
-            }
-        });
+//        myRef.child(fAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.w("Failed to edit value.", error.toException());
+//            }
+//        });
+    }
+
+
+    private boolean descriptionChanged() {
+        String key = myRef.push().getKey();
+        Note note = new Note();
+        if(!note.getDescription().equals(showDescription.getText().toString())){
+            myRef.child(key).child("description").setValue(showDescription.getText().toString());
+//            note.getDescription() = showDescription.getText().toString();
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private boolean titleChanged() {
+        String key = myRef.push().getKey();
+        Note note = new Note();
+        if(!note.getTitle().equals(showTitle.getText().toString())){
+            myRef.child(key).child("title").setValue(showTitle.getText().toString());
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
@@ -92,13 +123,15 @@ public class ShowNoteActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()){
             case R.id.edit_note:
+                fAuth = FirebaseAuth.getInstance();
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                myRef = database.getReference( "Notes");
                 editNote();
-                Intent startIntent = new Intent(ShowNoteActivity.this, NewNoteActivity.class);
+                Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
                 startActivity(startIntent);
-                Toast.makeText(ShowNoteActivity.this, "Note updated!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.delete_note:
-                fAuth.signOut();
+
                 Intent signOutIntent = new Intent(ShowNoteActivity.this, StartActivity.class);
                 startActivity(signOutIntent);
                 finish();
