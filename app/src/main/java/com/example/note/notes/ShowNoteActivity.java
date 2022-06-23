@@ -134,8 +134,8 @@ public class ShowNoteActivity extends AppCompatActivity {
         EditText getDescription = findViewById(R.id.showDescription);
         Description = getDescription.getText().toString();
         switch (item.getItemId()){
-            case R.id.edit_note:
-                break;
+//            case R.id.edit_note:
+//                break;
 
             case R.id.delete_note:
                 removeNote();
