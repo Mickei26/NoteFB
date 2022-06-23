@@ -88,12 +88,11 @@ public class ShowNoteActivity extends AppCompatActivity {
                         myRef.child(Title).updateChildren(map);
                         Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
                         startActivity(startIntent);
-                        Toast.makeText(ShowNoteActivity.this, "Note added!" + Time, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        Toast.makeText(ShowNoteActivity.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -116,7 +115,6 @@ public class ShowNoteActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
         myRef = database.getReference( "Notes");
         myRef.child(fAuth.getCurrentUser().getUid()).child(Title).removeValue();
-
     }
 
     @Override
