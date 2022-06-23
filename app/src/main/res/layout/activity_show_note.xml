@@ -40,8 +40,13 @@
         android:layout_centerHorizontal="true"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/btnSaveEdit"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:text="Save edit" />
+        <Button
             android:id="@+id/btnBackMain"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
             android:text="Back" />
     </LinearLayout>
