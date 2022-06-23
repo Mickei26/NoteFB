@@ -55,7 +55,7 @@ public class ShowNoteActivity extends AppCompatActivity {
         Time = getIntent().getExtras().getString("Time");
         showTime.setText(Time);
 
-        note = getIntent().getParcelableExtra("note");
+        note = getIntent().getParcelableExtra("Note");
         if(note!=null){
             showTitle.setText(note.getTitle());
             showDescription.setText(note.getDescription());
@@ -110,13 +110,6 @@ public class ShowNoteActivity extends AppCompatActivity {
         });
     }
 
-    public void removeNote(){
-        fAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        myRef = database.getReference( "Notes");
-        myRef.child(fAuth.getCurrentUser().getUid()).child(Title).removeValue();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -127,16 +120,16 @@ public class ShowNoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
-        EditText getTitle = findViewById(R.id.showTitle);
-        Title = getTitle.getText().toString();
-        EditText getDescription = findViewById(R.id.showDescription);
-        Description = getDescription.getText().toString();
         switch (item.getItemId()){
 //            case R.id.edit_note:
 //                break;
 
             case R.id.delete_note:
-                removeNote();
+                fAuth = FirebaseAuth.getInstance();
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                myRef = database.getReference( "Notes").child(fAuth.getCurrentUser().getUid());
+                myRef.child(Title).removeValue();
+                Toast.makeText(ShowNoteActivity.this, Title, Toast.LENGTH_SHORT).show();
                 Intent removeNoteIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
                 startActivity(removeNoteIntent);
                 finish();

@@ -7,7 +7,7 @@ public class Note implements Parcelable {
     String title;
     String description;
     String time;
-    String NoteID;
+    String noteID;
 
     public Note() {
     }
@@ -16,14 +16,14 @@ public class Note implements Parcelable {
         this.title = title;
         this.description = description;
         this.time = time;
-        NoteID = noteID;
+        this.noteID = noteID;
     }
 
     protected Note(Parcel in) {
         title = in.readString();
         description = in.readString();
         time = in.readString();
-        NoteID = in.readString();
+        noteID = in.readString();
     }
 
     public static final Creator<Note> CREATOR = new Creator<Note>() {
@@ -63,11 +63,11 @@ public class Note implements Parcelable {
     }
 
     public String getNoteID() {
-        return NoteID;
+        return noteID;
     }
 
     public void setNoteID(String noteID) {
-        NoteID = noteID;
+        this.noteID = noteID;
     }
 
     @Override
@@ -80,6 +80,6 @@ public class Note implements Parcelable {
         dest.writeString(title);
         dest.writeString(description);
         dest.writeString(time);
-        dest.writeString(NoteID);
+        dest.writeString(noteID);
     }
 }

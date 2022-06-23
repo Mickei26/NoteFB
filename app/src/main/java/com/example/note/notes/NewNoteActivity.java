@@ -29,14 +29,15 @@ public class NewNoteActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private EditText editTit, editDesc;
     private Button btnSave, btnBack;
-    private String Title, Description, NoteId;
+    private String Title, Description, NoteId, Time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
         fAuth = FirebaseAuth.getInstance();
-        myRef = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Notes");
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        myRef = database.getReference("Notes");
 
         editTit = findViewById(R.id.editTitle);
         editDesc = findViewById(R.id.editDescription);
@@ -50,7 +51,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 Description = editDesc.getText().toString();
                 if (!TextUtils.isEmpty(Title)&&!TextUtils.isEmpty(Description)){
                     Date now = java.util.Calendar.getInstance().getTime();
-                    String Time = now.toString();
+                    Time = now.toString();
                     NoteId = Title;
                     Note note = new Note(Title, Description, Time, NoteId);
 
