@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 fAuth.signOut();
                 Intent signOutIntent = new Intent(MainActivity.this, StartActivity.class);
                 startActivity(signOutIntent);
-                finish();
                 break;
         }
         return true;

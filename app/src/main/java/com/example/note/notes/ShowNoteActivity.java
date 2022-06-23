@@ -77,8 +77,8 @@ public class ShowNoteActivity extends AppCompatActivity {
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        myRef.child(fAuth.getCurrentUser().getUid()).child(Title).setValue(map);
-                        Toast.makeText(ShowNoteActivity.this, "" + NoteId, Toast.LENGTH_SHORT).show();
+                        myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).updateChildren(map);
+                        Toast.makeText(ShowNoteActivity.this, "Note Updated!", Toast.LENGTH_SHORT).show();
                         Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
                         startActivity(startIntent);
                     }
@@ -98,7 +98,6 @@ public class ShowNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
                 startActivity(startIntent);
-                finish();
             }
         });
     }
@@ -120,12 +119,11 @@ public class ShowNoteActivity extends AppCompatActivity {
             case R.id.delete_note:
                 fAuth = FirebaseAuth.getInstance();
                 FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
-                myRef = database.getReference( "Notes").child(fAuth.getCurrentUser().getUid());
-                myRef.child(Title).removeValue();
-                Toast.makeText(ShowNoteActivity.this, Title, Toast.LENGTH_SHORT).show();
+                myRef = database.getReference( "Notes");
+                myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).removeValue();
+                Toast.makeText(ShowNoteActivity.this, "Deleted!", Toast.LENGTH_SHORT).show();
                 Intent removeNoteIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
                 startActivity(removeNoteIntent);
-                finish();
                 break;
         }
         return true;

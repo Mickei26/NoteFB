@@ -49,13 +49,11 @@ public class StartActivity extends AppCompatActivity {
     private void Login(){
         Intent startIntent = new Intent(StartActivity.this, LoginActivity.class);
         startActivity(startIntent);
-        finish();
     }
 
     private void Register(){
         Intent startIntent = new Intent(StartActivity.this, RegisterActivity.class);
         startActivity(startIntent);
-        finish();
     }
 
     private void updateUI(){
@@ -63,7 +61,6 @@ public class StartActivity extends AppCompatActivity {
             Log.i("StartActivity", "fAuth != null");
             Intent startIntent = new Intent(StartActivity.this, MainActivity.class);
             startActivity(startIntent);
-            finish();
         }else {
             Log.i("StartActivity", "fAuth == null");
         }

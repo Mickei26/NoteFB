@@ -80,7 +80,6 @@ public class NewNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startIntent = new Intent(NewNoteActivity.this, MainActivity.class);
                 startActivity(startIntent);
-                finish();
             }
         });
     }
