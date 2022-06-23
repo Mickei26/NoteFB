@@ -75,17 +75,20 @@ public class MainActivity extends AppCompatActivity {
                     lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent intent = new Intent(MainActivity.this, ShowNoteActivity.class);
                             String title = list.get(position).getTitle();
                             String description = list.get(position).getDescription();
                             String time = list.get(position).getTime();
-                            intent.putExtra("Position", position);
-                            intent.putExtra("Title", title);
-                            intent.putExtra("Description", description);
-                            intent.putExtra("Time", time);
+                            Note obj = new Note();
+                            obj.setTitle(title);
+                            obj.setDescription(description);
+                            obj.setTime(time);
+                            obj.setNoteID(title);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("note", obj);
+                            Intent intent = new Intent(MainActivity.this, ShowNoteActivity.class);
+                            intent.putExtras(bundle);
                             startActivity(intent);
                             finish();
-//                            Toast.makeText(getApplicationContext(), test, Toast.LENGTH_LONG).show();
                         }
                     });
                 }

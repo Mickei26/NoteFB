@@ -30,7 +30,7 @@ public class ShowNoteActivity extends AppCompatActivity {
     private FirebaseAuth fAuth;
     private DatabaseReference myRef;
 
-    private EditText showTitle, showDescription, showTime;
+    private EditText editTitle, editDescription, editTime;
     private Button back, save;
     private String Title, Description, Time, NoteId;
     private Note note;
@@ -43,49 +43,42 @@ public class ShowNoteActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
-        showTitle = findViewById(R.id.showTitle);
-        Title = getIntent().getExtras().getString("Title");
-        showTitle.setText(Title);
+        editTitle = findViewById(R.id.showTitle);
+        editDescription = findViewById(R.id.showDescription);
+        editTime = findViewById(R.id.showTime);
 
-        showDescription = findViewById(R.id.showDescription);
-        Description = getIntent().getExtras().getString("Description");
-        showDescription.setText(Description);
-
-        showTime = findViewById(R.id.showTime);
-        Time = getIntent().getExtras().getString("Time");
-        showTime.setText(Time);
-
-        note = getIntent().getParcelableExtra("Note");
+        Bundle bundle = getIntent().getExtras();
+        note = (Note) bundle.getParcelable("note");
         if(note!=null){
-            showTitle.setText(note.getTitle());
-            showDescription.setText(note.getDescription());
-            showTime.setText(note.getTime());
-            NoteId = getIntent().getExtras().getString("Title");
+            editTitle.setText(note.getTitle());
+            editDescription.setText(note.getDescription());
+            editTime.setText(note.getTime());
+            NoteId = note.getNoteID();
         }
 
-        myRef = database.getReference( "Notes").child(fAuth.getCurrentUser().getUid());
-
+        myRef = database.getReference( "Notes");
         save = findViewById(R.id.btnSaveEdit);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Date now = java.util.Calendar.getInstance().getTime();
-                String Time = now.toString();
+                Time = now.toString();
 
-                Title = showTitle.getText().toString();
-                Description = showDescription.getText().toString();
+                Title = editTitle.getText().toString();
+                Description = editDescription.getText().toString();
 
                 Map<String,Object> map = new HashMap<>();
                 map.put("title", Title);
                 map.put("description", Description);
                 map.put("time", Time);
-                map.put("NoteID", NoteId);
+                map.put("noteID", NoteId);
 
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        myRef.child(Title).updateChildren(map);
+//                        myRef.child(fAuth.getCurrentUser().getUid()).child(Title).setValue(map);
+                        Toast.makeText(ShowNoteActivity.this, "" + NoteId, Toast.LENGTH_SHORT).show();
                         Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
                         startActivity(startIntent);
                     }
