@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.note.MainActivity;
 import com.example.note.R;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -87,6 +88,11 @@ public class ShowNoteActivity extends AppCompatActivity {
                                         Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
                                         startActivity(startIntent);
                                         finish();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(ShowNoteActivity.this, "Error to update!", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }

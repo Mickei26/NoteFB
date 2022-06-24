@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +31,8 @@ public class ListNoteAdapter extends ArrayAdapter<Note> {
         }
         TextView title = (TextView) convertView.findViewById(R.id.txtTitle);
         TextView time = (TextView) convertView.findViewById(R.id.txtTime);
+        ImageView Img = convertView.findViewById(R.id.imgAnh);
+        Img.setImageURI(note.getUrl());
         title.setText(note.getTitle());
         time.setText(note.getTime());
         return convertView;

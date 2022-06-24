@@ -1,5 +1,6 @@
 package com.example.note.notes;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,15 +9,25 @@ public class Note implements Parcelable {
     String description;
     String time;
     String noteID;
+    Uri url;
 
-    public Note() {
-    }
-
-    public Note(String title, String description, String time, String noteID) {
+    public Note(String title, String description, String time, String noteID, Uri url) {
         this.title = title;
         this.description = description;
         this.time = time;
         this.noteID = noteID;
+        this.url = url;
+    }
+
+    public Uri getUrl() {
+        return url;
+    }
+
+    public void setUrl(Uri url) {
+        this.url = url;
+    }
+
+    public Note() {
     }
 
     public String getNoteID() {
