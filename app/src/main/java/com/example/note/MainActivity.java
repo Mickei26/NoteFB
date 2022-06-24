@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         }else {
             Intent startIntent = new Intent(MainActivity.this, StartActivity.class);
             startActivity(startIntent);
-            finish();
             Log.i("MainActivity", "fAuth == null");
         }
     }
@@ -78,17 +77,17 @@ public class MainActivity extends AppCompatActivity {
                             String title = list.get(position).getTitle();
                             String description = list.get(position).getDescription();
                             String time = list.get(position).getTime();
+                            String noteId = list.get(position).getNoteID();
                             Note obj = new Note();
                             obj.setTitle(title);
                             obj.setDescription(description);
                             obj.setTime(time);
-                            obj.setNoteID(title);
+                            obj.setNoteID(noteId);
                             Bundle bundle = new Bundle();
                             bundle.putParcelable("note", obj);
                             Intent intent = new Intent(MainActivity.this, ShowNoteActivity.class);
                             intent.putExtras(bundle);
                             startActivity(intent);
-                            finish();
                         }
                     });
                 }
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }

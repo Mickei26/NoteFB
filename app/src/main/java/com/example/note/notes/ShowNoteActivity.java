@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.note.MainActivity;
 import com.example.note.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ShowNoteActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class ShowNoteActivity extends AppCompatActivity {
     private DatabaseReference myRef;
 
     private EditText editTitle, editDescription, editTime;
-    private Button back, save;
+    private Button back, save, delete;
     private String Title, Description, Time, NoteId;
     private Note note;
 
@@ -48,13 +48,11 @@ public class ShowNoteActivity extends AppCompatActivity {
         editTime = findViewById(R.id.showTime);
 
         Bundle bundle = getIntent().getExtras();
-        note = (Note) bundle.getParcelable("note");
-        if(note!=null){
-            editTitle.setText(note.getTitle());
-            editDescription.setText(note.getDescription());
-            editTime.setText(note.getTime());
-            NoteId = note.getNoteID();
-        }
+        Note note = (Note) bundle.getParcelable("note");
+        editTitle.setText(note.getTitle());
+        editDescription.setText(note.getDescription());
+        editTime.setText(note.getTime());
+        NoteId = note.getNoteID();
 
         myRef = database.getReference( "Notes");
         save = findViewById(R.id.btnSaveEdit);
@@ -68,28 +66,53 @@ public class ShowNoteActivity extends AppCompatActivity {
                 Title = editTitle.getText().toString();
                 Description = editDescription.getText().toString();
 
-                Map<String,Object> map = new HashMap<>();
-                map.put("title", Title);
-                map.put("description", Description);
-                map.put("time", Time);
-                map.put("noteID", NoteId);
+//                Note noteUpdate = new Note(Title, Description, Time, NoteId);
 
-                myRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).updateChildren(map);
-                        Toast.makeText(ShowNoteActivity.this, "Note Updated!", Toast.LENGTH_SHORT).show();
-                        Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
-                        startActivity(startIntent);
-                    }
+                HashMap hashMap = new HashMap<>();
+                hashMap.put("title", Title);
+                hashMap.put("description", Description);
+                hashMap.put("time", Time);
+                hashMap.put("noteID", NoteId);
 
+                Thread thread = new Thread(new Runnable() {
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(ShowNoteActivity.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                    public void run() {
+                        myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                                    @Override
+                                    public void onSuccess(Object o) {
+                                        Toast.makeText(ShowNoteActivity.this, "Note Updated!" + NoteId, Toast.LENGTH_SHORT).show();
+                                        Intent startIntent = new Intent(ShowNoteActivity.this, NewNoteActivity.class);
+                                        startActivity(startIntent);
+                                        finish();
+                                    }
+                                });
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(ShowNoteActivity.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
+                thread.start();
             }
         });
+
+        delete = findViewById(R.id.btnDeleteNote);
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).removeValue();
+                Toast.makeText(ShowNoteActivity.this, "Deleted!" + NoteId, Toast.LENGTH_SHORT).show();
+                Intent removeNoteIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
+                startActivity(removeNoteIntent);
+            }
+        });
+
 
         back =findViewById(R.id.btnBackMain);
 
@@ -116,15 +139,15 @@ public class ShowNoteActivity extends AppCompatActivity {
 //            case R.id.edit_note:
 //                break;
 
-            case R.id.delete_note:
-                fAuth = FirebaseAuth.getInstance();
-                FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
-                myRef = database.getReference( "Notes");
-                myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).removeValue();
-                Toast.makeText(ShowNoteActivity.this, "Deleted!", Toast.LENGTH_SHORT).show();
-                Intent removeNoteIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
-                startActivity(removeNoteIntent);
-                break;
+//            case R.id.delete_note:
+//                fAuth = FirebaseAuth.getInstance();
+//                FirebaseDatabase database = FirebaseDatabase.getInstance("https://note-2606-default-rtdb.asia-southeast1.firebasedatabase.app/");
+//                myRef = database.getReference( "Notes");
+//                myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).removeValue();
+//                Toast.makeText(ShowNoteActivity.this, "Deleted!" + NoteId, Toast.LENGTH_SHORT).show();
+//                Intent removeNoteIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
+//                startActivity(removeNoteIntent);
+//                break;
         }
         return true;
     }

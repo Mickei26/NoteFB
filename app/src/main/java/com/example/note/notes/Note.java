@@ -19,6 +19,14 @@ public class Note implements Parcelable {
         this.noteID = noteID;
     }
 
+    public String getNoteID() {
+        return noteID;
+    }
+
+    public void setNoteID(String noteID) {
+        this.noteID = noteID;
+    }
+
     protected Note(Parcel in) {
         title = in.readString();
         description = in.readString();
@@ -60,14 +68,6 @@ public class Note implements Parcelable {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getNoteID() {
-        return noteID;
-    }
-
-    public void setNoteID(String noteID) {
-        this.noteID = noteID;
     }
 
     @Override
