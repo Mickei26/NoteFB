@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         lView = findViewById(R.id.listView);
 
-        updateUI();
+//        updateUI();
+        showNote();
 
     }
 
@@ -70,26 +71,31 @@ public class MainActivity extends AppCompatActivity {
                     Note note = dataSnapshot.getValue(Note.class);
                     adapter.add(note);
                     lView.setAdapter(adapter);
-
-                    lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String title = list.get(position).getTitle();
-                            String description = list.get(position).getDescription();
-                            String time = list.get(position).getTime();
-                            String noteId = list.get(position).getNoteID();
-                            Note obj = new Note();
-                            obj.setTitle(title);
-                            obj.setDescription(description);
-                            obj.setTime(time);
-                            obj.setNoteID(noteId);
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelable("note", obj);
-                            Intent intent = new Intent(MainActivity.this, ShowNoteActivity.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    });
+Thread thread = new Thread(new Runnable() {
+    @Override
+    public void run() {
+        lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String title = list.get(position).getTitle();
+                String description = list.get(position).getDescription();
+                String time = list.get(position).getTime();
+                String noteId = list.get(position).getNoteID();
+                Note obj = new Note();
+                obj.setTitle(title);
+                obj.setDescription(description);
+                obj.setTime(time);
+                obj.setNoteID(noteId);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("note", obj);
+                Intent intent = new Intent(MainActivity.this, ShowNoteActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+    }
+});
+thread.start();
                 }
                 adapter.notifyDataSetChanged();
             }

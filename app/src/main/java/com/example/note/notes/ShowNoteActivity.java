@@ -83,8 +83,8 @@ public class ShowNoteActivity extends AppCompatActivity {
                                 myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
                                     @Override
                                     public void onSuccess(Object o) {
-                                        Toast.makeText(ShowNoteActivity.this, "Note Updated!" + NoteId, Toast.LENGTH_SHORT).show();
-                                        Intent startIntent = new Intent(ShowNoteActivity.this, NewNoteActivity.class);
+                                        Toast.makeText(ShowNoteActivity.this, "Note Updated!", Toast.LENGTH_SHORT).show();
+                                        Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
                                         startActivity(startIntent);
                                         finish();
                                     }
@@ -108,8 +108,8 @@ public class ShowNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 myRef.child(fAuth.getCurrentUser().getUid()).child(NoteId).removeValue();
                 Toast.makeText(ShowNoteActivity.this, "Deleted!" + NoteId, Toast.LENGTH_SHORT).show();
-                Intent removeNoteIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
-                startActivity(removeNoteIntent);
+                Intent startIntent = new Intent(ShowNoteActivity.this, MainActivity.class);
+                startActivity(startIntent);
             }
         });
 
